@@ -2,7 +2,7 @@
 ## (rpmautospec version 0.7.3)
 ## RPMAUTOSPEC: autorelease
 %define autorelease(e:s:pb:n) %{?-p:0.}%{lua:
-    release_number = 1;
+    release_number = 2;
     base_release_number = tonumber(rpm.expand("%{?-b*}%{!?-b:1}"));
     print(release_number + base_release_number - 1);
 }%{?-e:.%{-e*}}%{?-s:.%{-s*}}%{!?-n:%{?dist}}
@@ -18,6 +18,10 @@ BuildArch:   noarch
 License:     MIT
 URL:         https://github.com/quickemu-project/%{name}
 Source0:     %{url}/archive/refs/tags/%{version}.tar.gz
+
+# Define upstream SHA256SUM for the .tar.gz matching this release version
+# curl https://github.com/quickemu-project/quickemu/archive/refs/tags/4.9.6.tar.gz | sha256sum
+%define      SHA256SUM0 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 
 # Based on: https://github.com/quickemu-project/quickemu/wiki/01-Installation#install-requirements-on-fedora
 # The `zsync` package is listed under Recommends as it is no longer packaged in mainline Fedora
@@ -50,6 +54,8 @@ Quickly create and run optimised Windows, macOS and Linux virtual machines
 %global debug_package %{nil}
 
 %prep
+# Validate our checksum
+echo "%SHA256SUM0  %SOURCE0" | sha256sum -c -
 %setup -q
 
 %install
@@ -74,3 +80,8 @@ install -Dm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 %{_mandir}/man1/quickget.1*
 
 %changelog
+* Tue Dec 17 2024 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.6-2
+- Add SHA256SUM validation for upstream code being pulled from GitHub
+
+* Tue Dec 17 2024 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.6-1
+- Initial commit
