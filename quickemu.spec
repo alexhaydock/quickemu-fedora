@@ -2,7 +2,7 @@
 ## (rpmautospec version 0.7.3)
 ## RPMAUTOSPEC: autorelease
 %define autorelease(e:s:pb:n) %{?-p:0.}%{lua:
-    release_number = 3;
+    release_number = 4;
     base_release_number = tonumber(rpm.expand("%{?-b*}%{!?-b:1}"));
     print(release_number + base_release_number - 1);
 }%{?-e:.%{-e*}}%{?-s:.%{-s*}}%{!?-n:%{?dist}}
@@ -80,6 +80,9 @@ install -Dm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 %{_mandir}/man1/quickget.1*
 
 %changelog
+* Wed Dec 18 2024 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.6-4
+- Rename spec file to match Fedora Packaging Guidelines
+
 * Tue Dec 17 2024 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.6-3
 - Use correct SHA256 checksum to validate upstream package
 
