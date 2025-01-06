@@ -2,14 +2,14 @@
 ## (rpmautospec version 0.7.3)
 ## RPMAUTOSPEC: autorelease
 %define autorelease(e:s:pb:n) %{?-p:0.}%{lua:
-    release_number = 4;
+    release_number = 1;
     base_release_number = tonumber(rpm.expand("%{?-b*}%{!?-b:1}"));
     print(release_number + base_release_number - 1);
 }%{?-e:.%{-e*}}%{?-s:.%{-s*}}%{!?-n:%{?dist}}
 ## END: Set by rpmautospec
 
 Name:        quickemu
-Version:     4.9.6
+Version:     4.9.7
 Release:     %autorelease
 Summary:     Quickly create and run optimised Windows, macOS and Linux virtual machines
 
@@ -20,8 +20,8 @@ URL:         https://github.com/quickemu-project/%{name}
 Source0:     %{url}/archive/refs/tags/%{version}.tar.gz
 
 # Define upstream SHA256SUM for the .tar.gz matching this release version
-#   curl -fsSL https://github.com/quickemu-project/quickemu/archive/refs/tags/4.9.6.tar.gz -o - 2>/dev/null | sha256sum
-%define      SHA256SUM0 796a047b0bfabb91eb143e5422ff74f5d2812f47120ed6b34eaf82bbdfe3e2a3
+#   curl -fsSL https://github.com/quickemu-project/quickemu/archive/refs/tags/4.9.7.tar.gz -o - 2>/dev/null | sha256sum
+%define      SHA256SUM0 38a93301a2b233bc458c62d1228d310a9c29c63c10d008c2905029ca66188606
 
 # Based on: https://github.com/quickemu-project/quickemu/wiki/01-Installation#install-requirements-on-fedora
 # The `zsync` package is listed under Recommends as it is no longer packaged in mainline Fedora
@@ -71,15 +71,18 @@ install -Dm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 
 %files
 %license LICENSE
-%{_bindir}/quickget
-%{_bindir}/quickemu
-%{_bindir}/quickreport
 %{_bindir}/chunkcheck
-%{_mandir}/man1/quickemu.1*
+%{_bindir}/quickemu
+%{_bindir}/quickget
+%{_bindir}/quickreport
 %{_mandir}/man1/quickemu_conf.1*
+%{_mandir}/man1/quickemu.1*
 %{_mandir}/man1/quickget.1*
 
 %changelog
+* Mon Jan 06 2025 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-1
+- Update to upstream version 4.9.7
+
 * Wed Dec 18 2024 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.6-4
 - Rename spec file to match Fedora Packaging Guidelines
 
