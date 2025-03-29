@@ -88,7 +88,7 @@ install -Dm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 
 %changelog
 * Sat Mar 29 2025 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-5
-- Fix missing %autopatch declaration
+- Fix missing autopatch declaration
 
 * Sat Mar 29 2025 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-4
 - Correctly name patches as Patch0 was not applying
