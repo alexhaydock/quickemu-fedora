@@ -1,0 +1,40 @@
+From 0c772d5619a556ac10604be30f763f54c655d5d2 Mon Sep 17 00:00:00 2001
+From: Alex Haydock <alex@alexhaydock.co.uk>
+Date: Mon, 20 Jan 2025 19:59:00 +0000
+Subject: [PATCH] fix: Check for PipeWire as well as PulseAudio before falling
+ back to ALSA (#1565)
+
+* fix: Check for PipeWire as well as PulseAudio before falling back to ALSA
+
+* fix: Use PipeWire backend if available, and where QEMU version is >8.1
+
+Co-authored-by: Liam <33645555+lj3954@users.noreply.github.com>
+
+---------
+
+Co-authored-by: Liam <33645555+lj3954@users.noreply.github.com>
+---
+ quickemu | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/quickemu b/quickemu
+index 8da9a9f..97acd6e 100755
+--- a/quickemu
++++ b/quickemu
+@@ -882,7 +882,12 @@ function configure_storage() {
+ function configure_display() {
+     # Determine which audio driver use between Pulseaudio or ALSA
+     local AUDIO_DRIVER="pa"
+-    if ! command -v pacmd >/dev/null 2>&1 ; then
++    if pidof pipewire >/dev/null 2>&1; then
++        # QEMU's pipewire audio backend was added in version 8.1
++        if [ "${QEMU_VER_SHORT}" -ge 81 ]; then
++            AUDIO_DRIVER="pipewire"
++        fi
++    elif ! pidof pulseaudio >/dev/null 2>&1; then
+         AUDIO_DRIVER="alsa"
+     fi
+ 
+-- 
+2.49.0
+

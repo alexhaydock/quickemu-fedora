@@ -2,7 +2,7 @@
 ## (rpmautospec version 0.7.3)
 ## RPMAUTOSPEC: autorelease
 %define autorelease(e:s:pb:n) %{?-p:0.}%{lua:
-    release_number = 2;
+    release_number = 3;
     base_release_number = tonumber(rpm.expand("%{?-b*}%{!?-b:1}"));
     print(release_number + base_release_number - 1);
 }%{?-e:.%{-e*}}%{?-s:.%{-s*}}%{!?-n:%{?dist}}
@@ -10,7 +10,7 @@
 
 Name:        quickemu
 Version:     4.9.7
-Release:     %autorelease
+Release:     %{autorelease}.patched
 Summary:     Quickly create and run optimised Windows, macOS and Linux virtual machines
 
 Group:       Applications/Emulators
@@ -18,6 +18,11 @@ BuildArch:   noarch
 License:     MIT
 URL:         https://github.com/quickemu-project/%{name}
 Source0:     %{url}/archive/refs/tags/%{version}.tar.gz
+
+Patch0: 0000-fix-Check-for-PipeWire-as-well-as-PulseAudio-before-.patch
+Patch1: 0001-fix-Enable-SMM-for-Linux-guests-on-Linux-hosts-when-.patch
+Patch2: 0002-fix-Select-OVMF_VARS-file-with-preloaded-MS-Platform.patch
+Patch3: 0003-fix-Select-OVMF_VARS-file-with-preloaded-MS-Platform.patch
 
 # Define upstream SHA256SUM for the .tar.gz matching this release version
 #   curl -fsSL https://github.com/quickemu-project/quickemu/archive/refs/tags/4.9.7.tar.gz -o - 2>/dev/null | sha256sum
@@ -80,6 +85,9 @@ install -Dm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 %{_mandir}/man1/quickget.1*
 
 %changelog
+* Sat Mar 29 2025 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-3
+- Import some upstream fixes as patches
+
 * Mon Jan 06 2025 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-2
 - Address upstream rename of quickemu.conf manpage
 
