@@ -2,7 +2,7 @@
 ## (rpmautospec version 0.7.3)
 ## RPMAUTOSPEC: autorelease
 %define autorelease(e:s:pb:n) %{?-p:0.}%{lua:
-    release_number = 4;
+    release_number = 5;
     base_release_number = tonumber(rpm.expand("%{?-b*}%{!?-b:1}"));
     print(release_number + base_release_number - 1);
 }%{?-e:.%{-e*}}%{?-s:.%{-s*}}%{!?-n:%{?dist}}
@@ -63,6 +63,8 @@ Quickly create and run optimised Windows, macOS and Linux virtual machines
 echo "%SHA256SUM0  %SOURCE0" | sha256sum -c -
 %setup -q
 
+%autopatch
+
 %install
 # Install binaries
 install -Dm755 chunkcheck %{buildroot}%{_bindir}/chunkcheck
@@ -85,6 +87,9 @@ install -Dm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 %{_mandir}/man1/quickget.1*
 
 %changelog
+* Sat Mar 29 2025 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-5
+- Fix missing %autopatch declaration
+
 * Sat Mar 29 2025 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-4
 - Correctly name patches as Patch0 was not applying
 
