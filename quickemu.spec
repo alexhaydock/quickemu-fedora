@@ -76,7 +76,7 @@ install -Dpm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 %{_bindir}/quickemu
 %{_bindir}/quickget
 %{_bindir}/quickreport
-%{_mandir}/man1/quickemu_conf.5*
+%{_mandir}/man5/quickemu_conf.5*
 %{_mandir}/man1/quickemu.1*
 %{_mandir}/man1/quickget.1*
 
