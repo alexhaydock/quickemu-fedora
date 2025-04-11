@@ -2,7 +2,7 @@
 ## (rpmautospec version 0.7.3)
 ## RPMAUTOSPEC: autorelease
 %define autorelease(e:s:pb:n) %{?-p:0.}%{lua:
-    release_number = 10;
+    release_number = 11;
     base_release_number = tonumber(rpm.expand("%{?-b*}%{!?-b:1}"));
     print(release_number + base_release_number - 1);
 }%{?-e:.%{-e*}}%{?-s:.%{-s*}}%{!?-n:%{?dist}}
@@ -58,14 +58,14 @@ Quickly create and run optimised Windows, macOS and Linux virtual machines
 
 %install
 # Install binaries
-install -Dm755 chunkcheck %{buildroot}%{_bindir}/chunkcheck
-install -Dm755 quickemu %{buildroot}%{_bindir}/quickemu
-install -Dm755 quickget %{buildroot}%{_bindir}/quickget
-install -Dm755 quickreport %{buildroot}%{_bindir}/quickreport
+install -Dpm755 chunkcheck %{buildroot}%{_bindir}/chunkcheck
+install -Dpm755 quickemu %{buildroot}%{_bindir}/quickemu
+install -Dpm755 quickget %{buildroot}%{_bindir}/quickget
+install -Dpm755 quickreport %{buildroot}%{_bindir}/quickreport
 # Install manpages
-install -Dm644 docs/quickemu_conf.5 %{buildroot}%{_mandir}/man1/quickemu_conf.5
-install -Dm644 docs/quickemu.1 %{buildroot}%{_mandir}/man1/quickemu.1
-install -Dm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
+install -Dpm644 docs/quickemu_conf.5 %{buildroot}%{_mandir}/man5/quickemu_conf.5
+install -Dpm644 docs/quickemu.1 %{buildroot}%{_mandir}/man1/quickemu.1
+install -Dpm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 
 %files
 %license LICENSE
@@ -78,5 +78,5 @@ install -Dm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 %{_mandir}/man1/quickget.1*
 
 %changelog
-* Tue Dec 17 2024 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-1
+* Fri Apr 11 2025 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-11
 - Initial package import to Fedora
