@@ -28,6 +28,9 @@ Patch:          https://github.com/quickemu-project/quickemu/pull/1579.patch
 
 BuildArch:      noarch
 
+# The optional dependency 'zsync', used by quickget to download diffs of
+# regularly-updated ISOs, is only available from third-party package repos
+# so has not been included in this spec.
 Requires:       bash
 Requires:       coreutils
 Requires:       curl
