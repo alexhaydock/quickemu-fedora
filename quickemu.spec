@@ -2,7 +2,7 @@
 ## (rpmautospec version 0.7.3)
 ## RPMAUTOSPEC: autorelease
 %define autorelease(e:s:pb:n) %{?-p:0.}%{lua:
-    release_number = 11;
+    release_number = 1;
     base_release_number = tonumber(rpm.expand("%{?-b*}%{!?-b:1}"));
     print(release_number + base_release_number - 1);
 }%{?-e:.%{-e*}}%{?-s:.%{-s*}}%{!?-n:%{?dist}}
@@ -11,17 +11,17 @@
 Name:           quickemu
 Version:        4.9.7
 Release:        %{autorelease}
-Summary:        Quickly create and run optimised Windows, macOS and Linux virtual machines
+Summary:        Quickly create and run optimized Windows, macOS and Linux virtual machines
 License:        MIT
 
 URL:            https://github.com/quickemu-project/quickemu
 Source:         %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
-# Import an upstream fix that solves VMs crashing due to the use of Pipewire on
-# Fedora 41 and above
+# Import an accepted upstream fix that solves VMs crashing due to the use of
+# Pipewire on Fedora 41 and above
 Patch:          https://github.com/quickemu-project/quickemu/pull/1565.patch
 
-# Import an upstream proposed fix which ensures UEFI Secure Boot functions
+# Import an accepted upstream fix which ensures UEFI Secure Boot functions
 # as a user would expect (on Fedora and other distributions), by enabling the
 # Microsoft UEFI Secure Boot Platform Keys within VMs
 Patch:          https://github.com/quickemu-project/quickemu/pull/1579.patch
@@ -54,7 +54,7 @@ Requires:       xdg-user-dirs
 Requires:       xrandr
 
 %description
-Quickly create and run optimised Windows, macOS and Linux virtual machines
+Quickly create and run optimized Windows, macOS and Linux virtual machines
 
 %prep
 %autosetup -p1
@@ -80,6 +80,5 @@ install -Dpm644 docs/quickget.1 %{buildroot}%{_mandir}/man1/quickget.1
 %{_mandir}/man1/quickemu.1*
 %{_mandir}/man1/quickget.1*
 
-%changelog
-* Fri Apr 11 2025 Alex Haydock <alex@alexhaydock.co.uk> - 4.9.7-11
-- Initial package import to Fedora
+ %changelog
+ %autochangelog
